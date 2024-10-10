@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <label for="address">Address:</label><br>
                     <textarea name="address" id="add-area"></textarea><br>
-                    <input type="submit" class="submit" value="Submit">
+                    <input type="submit" name="submit" class="submit" value="Submit">
                     <button></button>
                 </div>
             </form>
@@ -43,39 +43,38 @@
     </div>
 
     <?php
-    $firstName = $_POST["firstname"];
-    $lastName = $_POST["lastname"];
-    $age = $_POST["age"];
-    $contact = $_POST["contact"];
-    $address = $_POST["address"];
+    if (isset($_POST['submit'])) {
+        $firstName = $_POST["firstname"];
+        $lastName = $_POST["lastname"];
+        $age = $_POST["age"];
+        $contact = $_POST["contact"];
+        $address = $_POST["address"];
 
+        $contactDetails = array(
+            "firstName" => "Firstname",
+            "lastName" => "Lastname",
+            "age" => "Age",
+            "contact" => "Contact",
+            "address" => "Address"
+        );
 
-    $contactDetails = array(
-        "firstName" => "Firstname",
-        "lastName" => "Lastname",
-        "age" => "Age",
-        "contact" => "Contact",
-        "address" => "Address"
-    );
-
-
-    if (
-        $firstName == "" || $lastName == "" || $age == "" ||
-        $contact == "" || $address == ""
-    ) {
-        echo '
+        if (
+            empty($firstName) || empty($lastName) || empty($age) ||
+            empty($contact) || empty($address)
+        ) {
+            echo '
                 <div class="warning">
-                <p>Please, Input necessary details.</p>
-               </div>
+                    <p>Please, Input necessary details.</p>
+                </div>
         ';
-    } else {
-        $contactDetails["firstName"] = $firstName;
-        $contactDetails["lastName"] = $lastName;
-        $contactDetails["age"] = $age;
-        $contactDetails["contact"] = $contact;
-        $contactDetails["address"] = $address;
+        } else {
+            $contactDetails["firstName"] = $firstName;
+            $contactDetails["lastName"] = $lastName;
+            $contactDetails["age"] = $age;
+            $contactDetails["contact"] = $contact;
+            $contactDetails["address"] = $address;
 
-        echo "   <div class='cont-contact'>
+            echo "<div class='cont-contact'>
                     <label>Firstname: </label>
                     <input type='text' disabled value='{$contactDetails["firstName"]}'>
                     <label>Lastname: : </label>
@@ -87,8 +86,10 @@
                     <label>Address: </label>
                     <input type='text' disabled value='{$contactDetails["address"]}'>
                  </div>";
+        }
     }
+
+
     ?>
 </body>
-
 </html>
